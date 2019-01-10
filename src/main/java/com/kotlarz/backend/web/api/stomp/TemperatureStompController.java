@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Slf4j
-@Controller
+@Controller( "furnace/stomp" )
 public class TemperatureStompController
 {
     @Autowired
@@ -24,7 +24,7 @@ public class TemperatureStompController
     @Autowired
     private LiveTemperaturesPublisher liveTemperaturesPublisher;
 
-    @MessageMapping( "/temperatures" )
+    @MessageMapping( "temperatures" )
     public void reportNew( List<NewTemperatureDto> temperatureDtos )
     {
         temperatureService.report( temperatureDtos );

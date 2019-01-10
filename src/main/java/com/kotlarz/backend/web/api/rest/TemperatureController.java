@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
-@RequestMapping( "temperatures" )
+@RequestMapping( "furnace/temperatures" )
 public class TemperatureController
 {
     @Autowired
