@@ -21,6 +21,8 @@ public class StompWebSocketConfiguration
     @Override
     public void registerStompEndpoints( StompEndpointRegistry registry )
     {
-        registry.addEndpoint( "/stomp" ).withSockJS();
+        registry.addEndpoint( "/stomp" )
+                        .setAllowedOrigins( "*" )
+                        .withSockJS();
     }
 }

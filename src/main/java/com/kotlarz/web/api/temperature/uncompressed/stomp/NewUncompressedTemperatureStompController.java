@@ -8,13 +8,13 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Controller( "furnace/stomp" )
+@Controller( "TODO" )
 public class NewUncompressedTemperatureStompController
 {
     @Autowired
     private TemperatureService temperatureService;
 
-    @MessageMapping( "temperature" )
+    @MessageMapping( "TODO" )
     public void reportNew( List<NewTemperatureDto> temperatureDtos )
     {
         temperatureService.report( temperatureDtos );
