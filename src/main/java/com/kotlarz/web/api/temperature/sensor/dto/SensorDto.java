@@ -4,9 +4,13 @@ import com.kotlarz.domain.Sensor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @Builder( builderMethodName = "buildSensor" )
+@NoArgsConstructor
 @AllArgsConstructor
 public class SensorDto
 {
@@ -22,6 +26,8 @@ public class SensorDto
 
     private Boolean initialized;
 
+    private Date added;
+
     public static SensorDto from( Sensor domain )
     {
         return SensorDto.buildSensor()
@@ -31,6 +37,7 @@ public class SensorDto
                         .isAlive( domain.getIsAlive() )
                         .alarmValue( domain.getAlarmValue() )
                         .initialized( domain.getInitialized() )
+                        .added( domain.getAdded() )
                         .build();
     }
 }

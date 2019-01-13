@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,9 +20,9 @@ public class SensorWithLogsDto
 
     @Builder( builderMethodName = "buildSensorWithLogs" )
     public SensorWithLogsDto( Long id, String name, String address, Boolean isAlive, Double alarmValue,
-                              Boolean initialized, List<TemperatureLogDto> logs )
+                              Boolean initialized, Date added, List<TemperatureLogDto> logs )
     {
-        super( id, name, address, isAlive, alarmValue, initialized );
+        super( id, name, address, isAlive, alarmValue, initialized, added );
         this.logs = logs;
     }
 

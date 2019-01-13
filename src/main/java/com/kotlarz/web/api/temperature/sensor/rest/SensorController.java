@@ -23,20 +23,27 @@ public class SensorController
                         .collect( Collectors.toList() );
     }
 
+    @GetMapping( "{id}" )
+    public SensorDto getSensor( @PathVariable( "id" ) Long sensorId )
+    {
+        return SensorDto.from( sensorService.get( sensorId )
+                                               .orElseThrow( RuntimeException::new ) );
+    }
+
     @PostMapping
     public void update( @RequestBody SensorDto dto )
     {
         sensorService.change( dto );
     }
 
-    @PostMapping( "initialize" )
-    public void initialize( @RequestParam( "id" ) Long sensorId )
+    @PostMapping( "initialize/{id}" )
+    public void initialize( @PathVariable( "id" ) Long sensorId )
     {
         sensorService.initialize( sensorId );
     }
 
-    @PostMapping( "reset" )
-    public void reset( @RequestParam( "id" ) Long sensorId )
+    @PostMapping( "reset/{id}" )
+    public void reset( @PathVariable( "id" ) Long sensorId )
     {
         sensorService.reset( sensorId );
     }

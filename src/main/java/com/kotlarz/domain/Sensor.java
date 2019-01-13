@@ -3,6 +3,7 @@ package com.kotlarz.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -29,6 +30,9 @@ public class Sensor
 
     private Boolean initialized;
 
+    @Column( nullable = false )
+    private Date added;
+
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true )
     private List<TemperatureLog> temperatureLogs;
 
@@ -39,6 +43,7 @@ public class Sensor
                         .name( address )
                         .isAlive( true )
                         .initialized( false )
+                        .added( new Date() )
                         .build();
     }
 }
