@@ -47,8 +47,9 @@ public class SensorService
         Sensor sensor = repository.getOne( dto.getId() );
         sensor.setName( dto.getName() );
         sensor.setAlarmValue( dto.getAlarmValue() );
+        sensor.setMaxInactiveTimeSec( dto.getMaxInactiveTimeSec() );
 
-        publisher.publishLatest();
+        publisher.forcePublishLatest();
     }
 
     public void initialize( Long sensorId )
@@ -56,7 +57,7 @@ public class SensorService
         log.info( "Initializing sensor with id " + sensorId );
         repository.getOne( sensorId ).setInitialized( true );
 
-        publisher.publishLatest();
+        publisher.forcePublishLatest();
     }
 
     public void reset( Long sensorId )
@@ -67,6 +68,6 @@ public class SensorService
         sensor.setName( sensor.getAddress() );
         sensor.setAlarmValue( null );
 
-        publisher.publishLatest();
+        publisher.forcePublishLatest();
     }
 }

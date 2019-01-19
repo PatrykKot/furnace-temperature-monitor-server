@@ -1,5 +1,6 @@
 package com.kotlarz.service.temperature;
 
+import com.kotlarz.domain.Sensor;
 import com.kotlarz.domain.TemperatureLog;
 import com.kotlarz.service.temperature.sensor.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class LatestTemperaturesResolver
     public List<TemperatureLog> getLatest()
     {
         return sensorService.getAll().stream()
+                        .filter( Sensor::getInitialized )
                         .map( sensor -> temperatureService.findLatestForSensor( sensor )
                                         .orElse( null ) )
                         .filter( Objects::nonNull )

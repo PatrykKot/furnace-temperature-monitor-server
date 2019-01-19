@@ -19,4 +19,7 @@ public interface TemperatureLogRepository
 
     @Query( "select u from TemperatureLog u where u.sensor.id = ?1 order by u.date DESC" )
     List<TemperatureLog> findLatestForSensor( Long sensorId, Pageable pageable );
+
+    @Query( "select u from TemperatureLog u where u.sensor.id = ?1 and u.date between ?2 and ?3" )
+    List<TemperatureLog> findBetween( Long sensorId, Date from, Date to );
 }

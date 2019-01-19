@@ -28,6 +28,8 @@ public class SensorDto
 
     private Date added;
 
+    private Integer maxInactiveTimeSec;
+
     public static SensorDto from( Sensor domain )
     {
         return SensorDto.buildSensor()
@@ -38,6 +40,7 @@ public class SensorDto
                         .alarmValue( domain.getAlarmValue() )
                         .initialized( domain.getInitialized() )
                         .added( domain.getAdded() )
+                        .maxInactiveTimeSec( domain.getMaxInactiveTimeSec() )
                         .build();
     }
 }

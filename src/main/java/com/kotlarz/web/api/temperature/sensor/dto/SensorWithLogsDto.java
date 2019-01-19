@@ -20,9 +20,10 @@ public class SensorWithLogsDto
 
     @Builder( builderMethodName = "buildSensorWithLogs" )
     public SensorWithLogsDto( Long id, String name, String address, Boolean isAlive, Double alarmValue,
-                              Boolean initialized, Date added, List<TemperatureLogDto> logs )
+                              Boolean initialized, Date added, Integer maxInactiveTimeSec,
+                              List<TemperatureLogDto> logs )
     {
-        super( id, name, address, isAlive, alarmValue, initialized, added );
+        super( id, name, address, isAlive, alarmValue, initialized, added, maxInactiveTimeSec );
         this.logs = logs;
     }
 
@@ -35,6 +36,7 @@ public class SensorWithLogsDto
                         .isAlive( sensor.getIsAlive() )
                         .alarmValue( sensor.getAlarmValue() )
                         .initialized( sensor.getInitialized() )
+                        .maxInactiveTimeSec( sensor.getMaxInactiveTimeSec() )
                         .build();
     }
 

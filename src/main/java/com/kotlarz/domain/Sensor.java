@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Sensor
 {
+    private static final Integer DEFAULT_MAX_INACTIVE_TIME_SEC = 60;
+
     @Id
     @GeneratedValue
     private Long id;
@@ -33,6 +35,9 @@ public class Sensor
     @Column( nullable = false )
     private Date added;
 
+    @Column( nullable = false )
+    private Integer maxInactiveTimeSec;
+
     @OneToMany( fetch = FetchType.LAZY, mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true )
     private List<TemperatureLog> temperatureLogs;
 
@@ -44,6 +49,7 @@ public class Sensor
                         .isAlive( true )
                         .initialized( false )
                         .added( new Date() )
+                        .maxInactiveTimeSec( DEFAULT_MAX_INACTIVE_TIME_SEC )
                         .build();
     }
 }

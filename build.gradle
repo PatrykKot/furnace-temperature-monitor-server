@@ -42,4 +42,7 @@ dependencies {
 
     // Joda Time
     compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
+
+    // Simplify
+    compile group: 'com.goebl', name: 'simplify', version: '1.0.0'
 }

@@ -1,9 +1,12 @@
 package com.kotlarz.web.api.temperature.rest;
 
+import com.goebl.simplify.Point;
+import com.kotlarz.domain.TemperatureLog;
 import com.kotlarz.service.temperature.LatestTemperaturesResolver;
 import com.kotlarz.service.temperature.TemperatureService;
+import com.kotlarz.service.temperature.TemperatureSimplificator;
 import com.kotlarz.web.api.temperature.dto.SingleSensorTemperatureLogDto;
-import com.kotlarz.web.api.temperature.sensor.dto.SensorWithLogsDto;
+import com.kotlarz.web.api.temperature.dto.TemperatureLogDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,9 @@ public class TemperatureController
     @Autowired
     private LatestTemperaturesResolver latestTemperaturesResolver;
 
+    @Autowired
+    private TemperatureSimplificator simplificator;
+
     @GetMapping( "latest" )
     public List<SingleSensorTemperatureLogDto> latest()
     {
@@ -32,9 +38,20 @@ public class TemperatureController
                         .collect( Collectors.toList() );
     }
 
-    @GetMapping( "later/{date}" )
-    public List<SensorWithLogsDto> laterThan( @PathVariable( "date" ) Long date )
+    @GetMapping( "history/{sensorId}/between/{from}/{to}" )
+    public List<TemperatureLogDto> laterThan( @PathVariable( "sensorId" ) Long sensorId,
+                                              @PathVariable( "from" ) Long from, @PathVariable( "to" ) Long to )
     {
-        return temperatureService.findLaterThan( new Date( date ) );
+        return temperatureService.findBetween( sensorId, new Date( from ), new Date( to ) ).stream()
+                        .map( TemperatureLogDto::from )
+                        .collect( Collectors.toList() );
+    }
+
+    @GetMapping( "history/{sensorId}/between/{from}/{to}/simplified" )
+    public Point[] laterThanSimplified( @PathVariable( "sensorId" ) Long sensorId,
+                                        @PathVariable( "from" ) Long from, @PathVariable( "to" ) Long to )
+    {
+        List<TemperatureLog> values = temperatureService.findBetween( sensorId, new Date( from ), new Date( to ) );
+        return simplificator.simplify( values );
     }
 }

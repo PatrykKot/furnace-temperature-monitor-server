@@ -4,10 +4,8 @@ import com.kotlarz.domain.Sensor;
 import com.kotlarz.domain.TemperatureLog;
 import com.kotlarz.persistance.TemperatureLogRepository;
 import com.kotlarz.service.temperature.reporter.UncompressedReporter;
-import com.kotlarz.service.temperature.sensor.AliveSensorResolver;
 import com.kotlarz.web.api.temperature.dto.NewTemperatureDto;
 import com.kotlarz.web.api.temperature.live.TemperaturePublisher;
-import com.kotlarz.web.api.temperature.sensor.dto.SensorWithLogsDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -32,20 +30,15 @@ public class TemperatureService
     @Autowired
     private TemperaturePublisher publisher;
 
-    @Autowired
-    private AliveSensorResolver aliveSensorResolver;
-
     public void report( List<NewTemperatureDto> logs )
     {
         uncompressedReporter.report( logs );
-        aliveSensorResolver.resolveInactiveSensors();
         publisher.publishLatest();
     }
 
-    public List<SensorWithLogsDto> findLaterThan( Date laterThanDate )
+    public List<TemperatureLog> findBetween( Long sensorId, Date from, Date to )
     {
-        List<TemperatureLog> logs = repository.findLaterThan( laterThanDate );
-        return SensorWithLogsDto.from( logs );
+        return repository.findBetween( sensorId, from, to );
     }
 
     public Optional<TemperatureLog> findLatestForSensor( Sensor sensor )
