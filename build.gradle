@@ -45,4 +45,7 @@ dependencies {
 
     // Simplify
     compile group: 'com.goebl', name: 'simplify', version: '1.0.0'
+
+    // Apache Commons IO
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
 }
