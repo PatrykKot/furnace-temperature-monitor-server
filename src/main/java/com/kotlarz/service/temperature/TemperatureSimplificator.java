@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class TemperatureSimplificator
 {
-    private static final Double TOLERANCE = 5D;
+    private static final Double TOLERANCE = 0.5D;
 
     private static final Boolean HIGH_QUALITY = true;
 
