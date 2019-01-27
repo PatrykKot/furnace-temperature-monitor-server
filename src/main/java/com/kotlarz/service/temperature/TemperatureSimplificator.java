@@ -11,11 +11,9 @@ import java.util.List;
 @Service
 public class TemperatureSimplificator
 {
-    private static final Double TOLERANCE = 0.5D;
-
     private static final Boolean HIGH_QUALITY = true;
 
-    public Point[] simplify( List<TemperatureLog> values )
+    public Point[] simplify( List<TemperatureLog> values, Double tolerance )
     {
         Simplify<Point> simplify = new Simplify<>( new LogPoint[0] );
         LogPoint[] points = values.stream()
@@ -23,6 +21,6 @@ public class TemperatureSimplificator
                                                               temperatureLog.getValue() ) )
                         .toArray( LogPoint[]::new );
 
-        return simplify.simplify( points, TOLERANCE, HIGH_QUALITY );
+        return simplify.simplify( points, tolerance, HIGH_QUALITY );
     }
 }

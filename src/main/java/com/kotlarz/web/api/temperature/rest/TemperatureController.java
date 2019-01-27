@@ -8,10 +8,7 @@ import com.kotlarz.service.temperature.TemperatureSimplificator;
 import com.kotlarz.web.api.temperature.dto.SingleSensorTemperatureLogDto;
 import com.kotlarz.web.api.temperature.dto.TemperatureLogDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -49,9 +46,10 @@ public class TemperatureController
 
     @GetMapping( "history/{sensorId}/between/{from}/{to}/simplified" )
     public Point[] laterThanSimplified( @PathVariable( "sensorId" ) Long sensorId,
-                                        @PathVariable( "from" ) Long from, @PathVariable( "to" ) Long to )
+                                        @PathVariable( "from" ) Long from, @PathVariable( "to" ) Long to,
+                                        @RequestParam( name = "tolerance", defaultValue = "0.5", required = false ) Double tolerance )
     {
         List<TemperatureLog> values = temperatureService.findBetween( sensorId, new Date( from ), new Date( to ) );
-        return simplificator.simplify( values );
+        return simplificator.simplify( values, tolerance );
     }
 }
